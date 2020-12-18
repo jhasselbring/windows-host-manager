@@ -1,10 +1,15 @@
 'use strict'
 
 import { app, protocol, BrowserWindow } from 'electron'
+
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib'
 import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer'
 const isDevelopment = process.env.NODE_ENV !== 'production'
-import { ipcMain } from 'electron'
+
+
+// Event listeners
+import './ipcMain'
+
 // Scheme must be registered before the app is ready
 protocol.registerSchemesAsPrivileged([
   { scheme: 'app', privileges: { secure: true, standard: true } }
@@ -31,6 +36,7 @@ async function createWindow() {
     // Load the index.html when not in development
     win.loadURL('app://./index.html')
   }
+
 }
 
 // Quit when all windows are closed.
@@ -65,11 +71,8 @@ app.on('ready', async () => {
   createWindow()
 })
 
-ipcMain.on('port', (e, msg) => {
-  const [port] = e.ports;
-  console.log(e);
-  console.log(msg);
-})
+
+
 // Exit cleanly on request from parent process in development mode.
 if (isDevelopment) {
   if (process.platform === 'win32') {

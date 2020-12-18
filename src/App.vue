@@ -1,34 +1,29 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div>{{ globalState.config }}</div>
+  <button @click="reload">Reload</button>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-import { ipcRenderer } from 'electron'
-window.ipcRenderer = ipcRenderer
-const { port1, port2 } = new MessageChannel()
+import globalState from "./globalState";
 
 export default {
-  name: 'App',
-  mounted(){
-    console.log('sending')
-ipcRenderer.postMessage('port', { message: 'hello' }, [port1])
-
+  name: "App",
+  data() {
+    return {
+      globalState,
+      localState: {},
+    };
   },
-  components: {
-    HelloWorld
-  }
-} 
+  mounted() {
+    ipcRenderer.send("get-config-from-fs");
+    ipcRenderer.on("send-config-from-fs", (e, v) => {
+      globalState.config = v;
+      console.log(v);
+      this.$forceUpdate();
+    });
+  },
+  methods: {},
+};
 </script>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
+<style lang="scss"></style>
