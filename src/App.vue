@@ -5,13 +5,21 @@
 
 <script>
 import HelloWorld from './components/HelloWorld.vue'
+import { ipcRenderer } from 'electron'
+window.ipcRenderer = ipcRenderer
+const { port1, port2 } = new MessageChannel()
 
 export default {
   name: 'App',
+  mounted(){
+    console.log('sending')
+ipcRenderer.postMessage('port', { message: 'hello' }, [port1])
+
+  },
   components: {
     HelloWorld
   }
-}
+} 
 </script>
 
 <style lang="scss">
