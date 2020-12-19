@@ -1,0 +1,9 @@
+
+#default
+127.0.0.1 localhost kubernetes.docker.internal
+192.168.0.3 host.docker.internal gateway.docker.internal
+192.168.0.13 db.9ws.us
+192.168.0.8 www.bovedainc.com.dev bovedainc.com.dev db.bovedainc.com
+
+#PVE
+192.168.0.14 pve.9w.com

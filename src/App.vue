@@ -1,10 +1,30 @@
 <template>
   <div id="config_container">
     <div id="switch_container">
-      <div v-for="(item, index) in switches" :key="index">{{ item }}</div>
+      <div
+        v-for="(item, index) in config.switch"
+        :key="index"
+        class="switch"
+        :class="{ enabled: item.enabled }"
+        @click="focusSwitch(index)"
+      >
+        <div>
+          <span v-if="item.enabled" @click="toggleActive(index)">✅</span>
+          <span v-if="!item.enabled" @click="toggleActive(index)">❌</span>
+          {{ index }}
+        </div>
+      </div>
     </div>
-    <div id="entries_container">2</div>
-    <div id="switch_container">3</div>
+    <div id="entries_container" v-if="config.switch && config.switch.default">
+      <div
+        v-for="(item, index) in this.config.switch[this.active.switch].entries"
+        class="ips"
+        :key="index"
+      >
+        {{ item.ip }}
+      </div>
+    </div>
+    <div id="domain_container">3</div>
   </div>
 </template>
 
@@ -16,6 +36,10 @@ export default {
   data() {
     return {
       config: {},
+      active: {
+        switch: "default",
+        ip: null,
+      },
     };
   },
   mounted() {
@@ -23,24 +47,25 @@ export default {
     ipcRenderer.send("get-config-from-fs");
     ipcRenderer.on("send-config-from-fs", (e, v) => {
       self.config = v;
-      console.log("From FS:", v);
       self.$forceUpdate();
     });
   },
-  methods: {},
-  computed: {
-    switches() {
-      console.log("1st list", this.config);
-      let list = [];
-
-      for (var key in this.config.switch) {
-        console.log(this.config.switch[key]);
-        list.push(key);
-      }
-      console.log("2nd list", this.config);
-      return list;
+  methods: {
+    updateFS() {
+      ipcRenderer.send("update-fs", JSON.stringify(this.config));
+    },
+    focusSwitch(index) {
+      this.active.switch = index;
+      console.log(this.config.switch[this.active.switch]);
+    },
+    toggleActive(index) {
+      this.config.switch[index].enabled = !this.config.switch[
+        index
+      ].enabled;
+      this.updateFS();
     },
   },
+  computed: {},
 };
 </script>
 
@@ -48,14 +73,47 @@ export default {
 * {
   padding: 0;
   margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
 }
 #config_container {
   height: 100%;
   width: 100%;
+  #switch_container {
+    padding: 5px;
+    margin: 2px;
+    & > .switch {
+      background-color: rgb(30, 30, 30);
+      padding: 5px;
+      margin: 2px;
+      cursor: pointer;
+      &.enabled {
+        background-color: rgb(83, 2, 2);
+        &:hover {
+          background-color: rgb(131, 4, 4);
+        }
+      }
+      &:hover {
+        background-color: rgb(40, 40, 40);
+      }
+    }
+  }
+  #entries_container {
+    padding: 5px;
+    margin: 2px;
+    & > .ips {
+      background-color: rgb(30, 30, 30);
+      padding: 5px;
+      margin: 2px;
+      cursor: pointer;
+      &:hover {
+        background-color: rgb(40, 40, 40);
+      }
+    }
+  }
   & > div {
     width: 33%;
     float: left;
-    height: 100%;
+    height: 100vh;
   }
 }
 </style>
