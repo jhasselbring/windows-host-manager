@@ -2,8 +2,8 @@ import { ipcMain } from 'electron'
 import fs from 'fs'
 
 let bus = ipcMain; // Alias for ipcMain
-// let fileDir = 'C:\\Windows\\System32\\drivers\\etc\\';
-let fileDir = __dirname + '\\..\\tmp\\';
+let fileDir = 'C:\\Windows\\System32\\drivers\\etc\\';
+// let fileDir = __dirname + '\\..\\tmp\\';
 let fileName = 'hosts';
 let hostFile = fileDir + fileName;
 let config = fileDir + fileName + '.json';
@@ -25,8 +25,6 @@ bus.on('get-config-from-fs', (e, msg) => {
 });
 
 bus.on('update-fs', (e, msg) => {
-  console.log('will update fs');
-  console.log(msg);
   msg = JSON.parse(msg);
   let hostData = '';
   for (var key in msg.switch) {
@@ -40,7 +38,6 @@ bus.on('update-fs', (e, msg) => {
       }
     }
   }
-  console.log(hostData);
   fs.writeFileSync(config, JSON.stringify(msg));
   fs.writeFileSync(hostFile, hostData);
 });

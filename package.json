@@ -12,8 +12,10 @@
   },
   "main": "background.js",
   "dependencies": {
+    "browser-window": "^0.4.0",
     "core-js": "^3.6.5",
     "lodash": "^4.17.20",
+    "remote": "^0.2.6",
     "vue": "^3.0.0"
   },
   "devDependencies": {

@@ -1,4 +1,5 @@
 <template>
+<titleBar />
   <div id="config_container">
     <div id="switch_container">
       <div
@@ -29,8 +30,7 @@
 </template>
 
 <script>
-import globalState from "./globalState";
-
+import titleBar from './components/titleBar'
 export default {
   name: "App",
   data() {
@@ -46,7 +46,9 @@ export default {
     let self = this;
     ipcRenderer.send("get-config-from-fs");
     ipcRenderer.on("send-config-from-fs", (e, v) => {
-      self.config = v;
+      self.config = v; //TODO: Delete
+      gS.config = v; 
+      console.log(gS);
       self.$forceUpdate();
     });
   },
@@ -56,7 +58,6 @@ export default {
     },
     focusSwitch(index) {
       this.active.switch = index;
-      console.log(this.config.switch[this.active.switch]);
     },
     toggleActive(index) {
       this.config.switch[index].enabled = !this.config.switch[
@@ -66,6 +67,7 @@ export default {
     },
   },
   computed: {},
+  components: {titleBar}
 };
 </script>
 
