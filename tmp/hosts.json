@@ -1,27 +1,30 @@
 {
-    "default": [
-      {
-        "ip": "127.0.0.1",
-        "domains": ["localhost", "kubernetes.docker.internal"]
-      },
-      {
-        "ip": "192.168.0.3",
-        "domains": ["host.docker.internal", "gateway.docker.internal"]
-      },
-      {
-        "ip": "192.168.0.13",
-        "domains": ["db.9ws.us"]
-      },
-      {
-        "ip": "192.168.0.8",
-        "domains": [
-          "www.bovedainc.com.dev",
-          "bovedainc.com.dev",
-          "db.bovedainc.com"
-        ]
-      }
-    ],
     "switch": {
+      "default": {
+        "enabled": true,
+        "entries": [
+          {
+            "ip": "127.0.0.1",
+            "domains": ["localhost", "kubernetes.docker.internal"]
+          },
+          {
+            "ip": "192.168.0.3",
+            "domains": ["host.docker.internal", "gateway.docker.internal"]
+          },
+          {
+            "ip": "192.168.0.13",
+            "domains": ["db.9ws.us"]
+          },
+          {
+            "ip": "192.168.0.8",
+            "domains": [
+              "www.bovedainc.com.dev",
+              "bovedainc.com.dev",
+              "db.bovedainc.com"
+            ]
+          }
+        ]
+      },
       "PVE": {
         "enabled": false,
         "entries": [

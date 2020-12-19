@@ -1,6 +1,11 @@
 <template>
-  <div>{{ globalState.config }}</div>
-  <button @click="reload">Reload</button>
+  <div id="config_container">
+    <div id="switch_container">
+      <div v-for="(item, index) in switches" :key="index">{{ item }}</div>
+    </div>
+    <div id="entries_container">2</div>
+    <div id="switch_container">3</div>
+  </div>
 </template>
 
 <script>
@@ -10,20 +15,47 @@ export default {
   name: "App",
   data() {
     return {
-      globalState,
-      localState: {},
+      config: {},
     };
   },
   mounted() {
+    let self = this;
     ipcRenderer.send("get-config-from-fs");
     ipcRenderer.on("send-config-from-fs", (e, v) => {
-      globalState.config = v;
-      console.log(v);
-      this.$forceUpdate();
+      self.config = v;
+      console.log("From FS:", v);
+      self.$forceUpdate();
     });
   },
   methods: {},
+  computed: {
+    switches() {
+      console.log("1st list", this.config);
+      let list = [];
+
+      for (var key in this.config.switch) {
+        console.log(this.config.switch[key]);
+        list.push(key);
+      }
+      console.log("2nd list", this.config);
+      return list;
+    },
+  },
 };
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+* {
+  padding: 0;
+  margin: 0;
+}
+#config_container {
+  height: 100%;
+  width: 100%;
+  & > div {
+    width: 33%;
+    float: left;
+    height: 100%;
+  }
+}
+</style>
