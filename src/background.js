@@ -22,6 +22,8 @@ async function createWindow() {
     frame: false,
     width: 800,
     height: 600,
+    frame: false,
+    transparent:true,
     webPreferences: {
       // Use pluginOptions.nodeIntegration, leave this alone
       // See nklayman.github.io/vue-cli-plugin-electron-builder/guide/security.html#node-integration for more info
@@ -33,7 +35,7 @@ async function createWindow() {
   if (process.env.WEBPACK_DEV_SERVER_URL) {
     // Load the url of the dev server if in development mode
     await win.loadURL(process.env.WEBPACK_DEV_SERVER_URL)
-    if (!process.env.IS_TEST) win.webContents.openDevTools()
+    // if (!process.env.IS_TEST) win.webContents.openDevTools()
   } else {
     createProtocol('app')
     // Load the index.html when not in development
@@ -61,7 +63,7 @@ app.on('trigger', () => {
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.on('ready', async () => {
+async function  onAppReady(){
   if (isDevelopment && !process.env.IS_TEST) {
     // Install Vue Devtools
     try {
@@ -71,9 +73,9 @@ app.on('ready', async () => {
     }
   }
   createWindow()
-})
+}
 
-
+app.on('ready', () => setTimeout(onAppReady, 300));
 
 // Exit cleanly on request from parent process in development mode.
 if (isDevelopment) {

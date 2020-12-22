@@ -1,6 +1,6 @@
 <template>
   <div id="title-bar">
-    <div id="title">Host Manager v1.0.0</div>
+    <div id="title"> &nbsp;🔥 Host Manager - v1.0.0</div>
     <div id="title-bar-btns">
       <button @click="min" class="purple">➖</button>
       <button @click="close" class="purple">❌</button>
@@ -45,7 +45,7 @@ export default {
     -webkit-app-region: no-drag;
     position: fixed;
     top: 0px;
-    right: 6px;
+    right: 1px;
     & > .purple {
       width: 30px;
       height: 30px;

@@ -90,9 +90,23 @@ export default {
 
 <style lang="scss">
 * {
+  box-sizing: border-box;
   padding: 0;
   margin: 0;
   font-family: Arial, Helvetica, sans-serif;
+}
+html,
+body,
+#app {
+  height: 100%;
+  overflow: hidden;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.05);
+}
+html {
+  &:hover {
+    background: rgba(0, 0, 0, 0.5);
+  }
 }
 #config_container {
   height: 100%;
@@ -150,7 +164,7 @@ export default {
     }
   }
   & > div {
-    width: calc(100%/3);
+    width: calc(100% / 3);
     float: left;
     height: 100vh;
     & > div {

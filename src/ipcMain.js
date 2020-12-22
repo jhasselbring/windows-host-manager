@@ -1,8 +1,8 @@
 import { ipcMain as bus } from 'electron'
 import fs from 'fs'
 
-let fileDir = 'C:\\Windows\\System32\\drivers\\etc\\';
-// let fileDir = __dirname + '\\..\\tmp\\';
+// let fileDir = 'C:\\Windows\\System32\\drivers\\etc\\';
+let fileDir = __dirname + '\\..\\tmp\\';
 let fileName = 'hosts';
 let hostFile = fileDir + fileName;
 let config = fileDir + fileName + '.json';
