@@ -1,7 +1,6 @@
-import { ipcMain } from 'electron'
+import { ipcMain as bus } from 'electron'
 import fs from 'fs'
 
-let bus = ipcMain; // Alias for ipcMain
 let fileDir = 'C:\\Windows\\System32\\drivers\\etc\\';
 // let fileDir = __dirname + '\\..\\tmp\\';
 let fileName = 'hosts';

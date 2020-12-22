@@ -1,45 +1,29 @@
 <template>
   <div id="title-bar">
-    <div id="title">Host Manager</div>
+    <div id="title">Host Manager v1.0.0</div>
     <div id="title-bar-btns">
-      <button id="min-btn">-</button>
-      <button id="max-btn">+</button>
-      <button @click="close">x</button>
+      <button @click="min" class="purple">➖</button>
+      <button @click="close" class="purple">❌</button>
     </div>
   </div>
 </template>
 <script>
 const electron = require("electron");
-const path = require("path");
 const remote = electron.remote;
 
 export default {
   data() {},
-  mounted() {
-    // (function() {
-    //   document.getElementById("min-btn").addEventListener("click", function(e) {
-    //     var window = remote.getCurrentWindow();
-    //     window.minimize();
-    //   });
-    //   document.getElementById("max-btn").addEventListener("click", function(e) {
-    //     var window = remote.getCurrentWindow();
-    //     if (!window.isMaximized()) {
-    //       window.maximize();
-    //     } else {
-    //       window.unmaximize();
-    //     }
-    //   });
-    //   document
-    //     .getElementById("close-btn")
-    //     .addEventListener("click", function(e) {
-    //     });
-    // })();
-  },
+  mounted() {},
   methods: {
     close() {
       var win = remote.getCurrentWindow();
-      console.log(win)
+      console.log(win);
       win.close();
+    },
+    min() {
+      var win = remote.getCurrentWindow();
+      console.log(win);
+      win.minimize();
     },
   },
 };
@@ -47,12 +31,14 @@ export default {
 <style lang="scss">
 #title-bar {
   -webkit-app-region: drag;
-  height: 24px;
+  height: 32px;
+  line-height: 32px;
+
   background-color: darkviolet;
   padding: none;
   margin: 0px;
+
   & > #title {
-    font-size: 800;
     padding: 2px;
   }
   & > #title-bar-btns {
@@ -60,6 +46,16 @@ export default {
     position: fixed;
     top: 0px;
     right: 6px;
+    & > .purple {
+      width: 30px;
+      height: 30px;
+      border: 0;
+      background-color: purple;
+      cursor: pointer;
+      &:hover {
+        background-color: violet;
+      }
+    }
   }
 }
 </style>

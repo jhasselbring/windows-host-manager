@@ -1,12 +1,12 @@
 <template>
-<titleBar />
+  <titleBar />
   <div id="config_container">
     <div id="switch_container">
       <div
         v-for="(item, index) in config.switch"
         :key="index"
         class="switch"
-        :class="{ enabled: item.enabled }"
+        :class="{ active: active.switch == index }"
         @click="focusSwitch(index)"
       >
         <div>
@@ -20,17 +20,29 @@
       <div
         v-for="(item, index) in this.config.switch[this.active.switch].entries"
         class="ips"
+        :class="{ active: active.ip == index }"
         :key="index"
+        @click="focusIP(index)"
       >
         {{ item.ip }}
       </div>
     </div>
-    <div id="domain_container">3</div>
+    <div id="domains_container" v-if="this.config.switch">
+      <div
+        class="domains"
+        v-for="(item, index) in this.config.switch[this.active.switch].entries[
+          this.active.ip
+        ].domains"
+        :key="index"
+      >
+        {{ item }}
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-import titleBar from './components/titleBar'
+import titleBar from "./components/titleBar";
 export default {
   name: "App",
   data() {
@@ -38,7 +50,7 @@ export default {
       config: {},
       active: {
         switch: "default",
-        ip: null,
+        ip: 0,
       },
     };
   },
@@ -47,7 +59,7 @@ export default {
     ipcRenderer.send("get-config-from-fs");
     ipcRenderer.on("send-config-from-fs", (e, v) => {
       self.config = v; //TODO: Delete
-      gS.config = v; 
+      gS.config = v;
       console.log(gS);
       self.$forceUpdate();
     });
@@ -57,17 +69,22 @@ export default {
       ipcRenderer.send("update-fs", JSON.stringify(this.config));
     },
     focusSwitch(index) {
+      this.active.ip = 0;
       this.active.switch = index;
     },
+    focusIP(index) {
+      this.active.ip = index;
+    },
     toggleActive(index) {
-      this.config.switch[index].enabled = !this.config.switch[
-        index
-      ].enabled;
+      this.config.switch[index].enabled = !this.config.switch[index].enabled;
       this.updateFS();
+    },
+    test() {
+      ipcRenderer.send("test");
     },
   },
   computed: {},
-  components: {titleBar}
+  components: { titleBar },
 };
 </script>
 
@@ -80,42 +97,66 @@ export default {
 #config_container {
   height: 100%;
   width: 100%;
+  padding: 5px;
   #switch_container {
-    padding: 5px;
-    margin: 2px;
     & > .switch {
-      background-color: rgb(30, 30, 30);
+      background-color: rgb(40, 40, 40);
       padding: 5px;
       margin: 2px;
       cursor: pointer;
-      &.enabled {
+      &.active {
         background-color: rgb(83, 2, 2);
         &:hover {
           background-color: rgb(131, 4, 4);
         }
       }
       &:hover {
-        background-color: rgb(40, 40, 40);
+        background-color: rgb(50, 50, 50);
       }
     }
   }
   #entries_container {
-    padding: 5px;
-    margin: 2px;
     & > .ips {
-      background-color: rgb(30, 30, 30);
+      background-color: rgb(40, 40, 40);
       padding: 5px;
       margin: 2px;
       cursor: pointer;
+      &.active {
+        background-color: rgb(83, 2, 2);
+        &:hover {
+          background-color: rgb(131, 4, 4);
+        }
+      }
       &:hover {
-        background-color: rgb(40, 40, 40);
+        background-color: rgb(50, 50, 50);
+      }
+    }
+  }
+  #domains_container {
+    & > .domains {
+      background-color: rgb(40, 40, 40);
+      padding: 5px;
+      margin: 2px;
+      cursor: pointer;
+      &.active {
+        background-color: rgb(83, 2, 2);
+        &:hover {
+          background-color: rgb(131, 4, 4);
+        }
+      }
+      &:hover {
+        background-color: rgb(50, 50, 50);
       }
     }
   }
   & > div {
-    width: 33%;
+    width: calc(100%/3);
     float: left;
     height: 100vh;
+    & > div {
+      height: 32px;
+      line-height: 26px;
+    }
   }
 }
 </style>
