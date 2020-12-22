@@ -1,52 +1,26 @@
 <template>
-  <titleBar />
+  <titleBar :config="config" />
   <div id="config_container">
-    <div id="switch_container">
-      <div
-        v-for="(item, index) in config.switch"
-        :key="index"
-        class="switch"
-        :class="{ active: active.switch == index }"
-        @click="focusSwitch(index)"
-      >
-        <div>
-          <span v-if="item.enabled" @click="toggleActive(index)">✅</span>
-          <span v-if="!item.enabled" @click="toggleActive(index)">❌</span>
-          {{ index }}
-        </div>
-      </div>
-    </div>
-    <div id="entries_container" v-if="config.switch && config.switch.default">
-      <div
-        v-for="(item, index) in this.config.switch[this.active.switch].entries"
-        class="ips"
-        :class="{ active: active.ip == index }"
-        :key="index"
-        @click="focusIP(index)"
-      >
-        {{ item.ip }}
-      </div>
-    </div>
-    <div id="domains_container" v-if="this.config.switch">
-      <div
-        class="domains"
-        v-for="(item, index) in this.config.switch[this.active.switch].entries[
-          this.active.ip
-        ].domains"
-        :key="index"
-      >
-        {{ item }}
-      </div>
-    </div>
+    <switchContainer :config="config" :active="active" />
+    <entrieshContainer :config="config" :active="active" />
+    <domainsContainer :config="config" :active="active" />
   </div>
 </template>
 
 <script>
+import {electron, remote } from 'electron'
 import titleBar from "./components/titleBar";
+import switchContainer from "./components/switchContainer";
+import entrieshContainer from "./components/entriesContainer";
+import domainsContainer from "./components/domainsContainer";
+let win = remote.getCurrentWindow();
 export default {
   name: "App",
   data() {
     return {
+      size: [],
+      position: [],
+      collapsed: false,
       config: {},
       active: {
         switch: "default",
@@ -55,12 +29,13 @@ export default {
     };
   },
   mounted() {
+    this.size = win.getSize();
     let self = this;
+    win.setPosition(0, 0);
+    win.setSize(1920, 1080);
     ipcRenderer.send("get-config-from-fs");
     ipcRenderer.on("send-config-from-fs", (e, v) => {
-      self.config = v; //TODO: Delete
-      gS.config = v;
-      console.log(gS);
+      self.config = v;
       self.$forceUpdate();
     });
   },
@@ -68,23 +43,33 @@ export default {
     updateFS() {
       ipcRenderer.send("update-fs", JSON.stringify(this.config));
     },
-    focusSwitch(index) {
-      this.active.ip = 0;
-      this.active.switch = index;
-    },
-    focusIP(index) {
-      this.active.ip = index;
-    },
-    toggleActive(index) {
-      this.config.switch[index].enabled = !this.config.switch[index].enabled;
-      this.updateFS();
-    },
-    test() {
-      ipcRenderer.send("test");
+    toggleBody() {
+      let self = this;
+
+      if (this.collapsed) {
+        console.log('size: ', self.size);
+        win.setSize(self.size[0], self.size[1]);
+        win.setPosition(self.position[0], self.position[1]);
+
+        this.collapsed = false;
+      } else {
+        self.size = win.getSize();
+        self.position = win.getPosition();
+        win.setSize(1920, 32);
+        win.setPosition(0, 0);
+
+
+        this.collapsed = true;
+      }
+      
     },
   },
-  computed: {},
-  components: { titleBar },
+  components: {
+    titleBar,
+    switchContainer,
+    entrieshContainer,
+    domainsContainer,
+  },
 };
 </script>
 
@@ -94,75 +79,20 @@ export default {
   padding: 0;
   margin: 0;
   font-family: Arial, Helvetica, sans-serif;
+  transition: background-color 0.3s ease, border 0.3s ease;
+  outline: none;
 }
 html,
-body,
-#app {
+body {
   height: 100%;
   overflow: hidden;
   color: #fff;
-  background: rgba(0, 0, 0, 0.05);
+  background: rgba(0, 0, 0, 0.5);
+
   #config_container {
     height: 100%;
     width: 100%;
     padding: 5px;
-    #switch_container {
-      & > .switch {
-        background-color: rgb(40, 40, 40);
-        padding: 5px;
-        margin: 2px;
-        cursor: pointer;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        &.active {
-          background-color: rgb(83, 2, 2);
-          &:hover {
-            background-color: rgb(131, 4, 4);
-          }
-        }
-        &:hover {
-          background-color: rgb(50, 50, 50);
-        }
-      }
-    }
-    #entries_container {
-      & > .ips {
-        background-color: rgb(40, 40, 40);
-        padding: 5px;
-        margin: 2px;
-        cursor: pointer;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        &.active {
-          background-color: rgb(83, 2, 2);
-          &:hover {
-            background-color: rgb(131, 4, 4);
-          }
-        }
-        &:hover {
-          background-color: rgb(50, 50, 50);
-        }
-      }
-    }
-    #domains_container {
-      & > .domains {
-        background-color: rgb(40, 40, 40);
-        padding: 5px;
-        margin: 2px;
-        cursor: pointer;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        &.active {
-          background-color: rgb(83, 2, 2);
-          &:hover {
-            background-color: rgb(131, 4, 4);
-          }
-        }
-        &:hover {
-          background-color: rgb(50, 50, 50);
-        }
-      }
-    }
     & > div {
       width: calc(100% / 3);
       float: left;
@@ -174,9 +104,5 @@ body,
     }
   }
 }
-html {
-  &:hover {
-    background: rgba(0, 0, 0, 0.5);
-  }
-}
+
 </style>

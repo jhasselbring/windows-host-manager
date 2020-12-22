@@ -1,6 +1,7 @@
 <template>
   <div id="title-bar">
-    <div id="title"> &nbsp;🔥 Host Manager - v1.0.0</div>
+    <div id="title">&nbsp;🔥 Host Manager - v1.0.0</div>
+    <div id="active" v-html="active"></div>
     <div id="title-bar-btns">
       <button @click="min" class="purple">➖</button>
       <button @click="close" class="purple">❌</button>
@@ -8,11 +9,12 @@
   </div>
 </template>
 <script>
-const electron = require("electron");
-const remote = electron.remote;
-
+import { electron, remote } from "electron";
+import _ from "lodash";
 export default {
-  data() {},
+  data() {
+    return {};
+  },
   mounted() {},
   methods: {
     close() {
@@ -21,11 +23,22 @@ export default {
       win.close();
     },
     min() {
-      var win = remote.getCurrentWindow();
-      console.log(win);
-      win.minimize();
+      this.$parent.toggleBody();
     },
   },
+  computed: {
+    active() {
+      let self = this;
+      let list = [];
+      _.forEach(self.config.switch, (v, i) => {
+        if (v.enabled) {
+          list.push('<span class="active">  ' + i + "  </span>&nbsp;");
+        }
+      });
+      return list.join("");
+    },
+  },
+  props: ["config"],
 };
 </script>
 <style lang="scss">
@@ -33,13 +46,25 @@ export default {
   -webkit-app-region: drag;
   height: 32px;
   line-height: 32px;
-
   background-color: darkviolet;
   padding: none;
   margin: 0px;
-
+  & > #active {
+    top: 0;
+    left: 200px;
+    & > .active {
+      background-color: green;
+      padding: 3px;
+      border: lightgreen solid 1px;
+      border-radius: 15px;
+    }
+  }
   & > #title {
     padding: 2px;
+  }
+  & > #active {
+    position: fixed;
+    margin: 0 auto;
   }
   & > #title-bar-btns {
     -webkit-app-region: no-drag;
