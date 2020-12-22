@@ -5,10 +5,11 @@
       :key="index"
       class="switch"
       :class="{ active: active.switch == index }"
+      @click.stop=""
     >
       <div>
-        <span v-if="item.enabled" @click="toggleActive(index)">✅</span>
-        <span v-if="!item.enabled" @click="toggleActive(index)">❌</span>
+        <span v-if="item.enabled" @click="toggleActive(index)" class="clickable">✅</span>
+        <span v-if="!item.enabled" @click="toggleActive(index)" class="clickable">❌</span>
         {{ index }}
         <span class="tool-box">
           <span class="tool edit">🖊</span>
@@ -16,6 +17,7 @@
         </span>
       </div>
     </div>
+    <div class="switch add" @click.stop="">➕</div>
   </div>
 </template>
 
@@ -38,19 +40,30 @@ export default {
 };
 </script>
 <style lang="scss">
+.clickable{
+  cursor: pointer;
+}
 #switch_container {
   & > .switch {
     background-color: rgb(40, 40, 40);
-    padding: 4px;
+    padding: 2px;
     margin: 2px;
     overflow: hidden;
     text-overflow: ellipsis;
     border: 1px transparent solid;
     position: relative;
     visibility: visible;
+    &.add{
+      background-color: lightgreen;
+      text-align: center;
+      cursor: pointer;
+      &:hover{
+        background-color: green;
+        border: 1px solid lightgreen;
+      }
+    }
     &:hover > div > .tool-box > .tool {
       visibility: visible;
-      ;
     }
     & > div > .tool-box {
       float: right;

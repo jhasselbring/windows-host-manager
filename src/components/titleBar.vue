@@ -1,7 +1,9 @@
 <template>
   <div id="title-bar">
-    <div id="title">&nbsp;🔥 Host Manager - v1.0.0</div>
-    <div id="active" v-html="active"></div>
+    <div id="title">
+      &nbsp;🔥 Host Manager - v1.0.0 <span id="active" v-html="active"></span>
+    </div>
+
     <div id="title-bar-btns">
       <button @click="min" class="purple">➖</button>
       <button @click="close" class="purple">❌</button>
@@ -43,28 +45,22 @@ export default {
 </script>
 <style lang="scss">
 #title-bar {
-  -webkit-app-region: drag;
+  // -webkit-app-region: drag;
   height: 32px;
   line-height: 32px;
   background-color: darkviolet;
   padding: none;
   margin: 0px;
-  & > #active {
-    top: 0;
-    left: 200px;
-    & > .active {
-      background-color: green;
-      padding: 3px;
-      border: lightgreen solid 1px;
-      border-radius: 15px;
-    }
-  }
   & > #title {
     padding: 2px;
-  }
-  & > #active {
-    position: fixed;
-    margin: 0 auto;
+    & > #active {
+      & > .active {
+        background-color: green;
+        padding: 1px;
+        border: lightgreen solid 1px;
+        border-radius: 15px;
+      }
+    }
   }
   & > #title-bar-btns {
     -webkit-app-region: no-drag;

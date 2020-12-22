@@ -5,6 +5,7 @@
       v-for="(item, index) in config.switch[active.switch].entries[active.ip]
         .domains"
       :key="index"
+      @click.stop=""
     >
       {{ item }}
     </div>
@@ -24,7 +25,7 @@ export default {
 #domains_container {
   & > .domains {
     background-color: rgb(40, 40, 40);
-    padding: 5px;
+    padding: 2px;
     margin: 2px;
     cursor: pointer;
     overflow: hidden;

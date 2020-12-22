@@ -1,6 +1,6 @@
 'use strict'
 
-import { app, protocol, BrowserWindow, ipcMain as bus } from 'electron'
+import { app, protocol, BrowserWindow, ipcMain as bus, screen } from 'electron'
 
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib'
 import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer'
@@ -20,8 +20,6 @@ async function createWindow() {
   // Create the browser window.
   win = new BrowserWindow({
     frame: false,
-    width: 800,
-    height: 600,
     frame: false,
     transparent:true,
     alwaysOnTop: true,
@@ -93,7 +91,7 @@ if (isDevelopment) {
   }
 }
 
-bus.on('test', (e, msg) => {
-  console.log(win);
-  win.close();
+bus.on('getScreenSize', (e, msg) => {
+  const { width, height } = screen.getPrimaryDisplay().workAreaSize;
+  e.returnValue  = {width, height};
 })

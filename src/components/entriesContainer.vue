@@ -5,7 +5,7 @@
       class="ips"
       :class="{ active: active.ip == index }"
       :key="index"
-      @click="focusIP(index)"
+      @click.stop="focusIP(index)"
     >
       {{ item.ip }}
     </div>
@@ -29,7 +29,7 @@ export default {
 #entries_container {
   & > .ips {
     background-color: rgb(40, 40, 40);
-    padding: 5px;
+    padding: 2px;
     margin: 2px;
     cursor: pointer;
     overflow: hidden;

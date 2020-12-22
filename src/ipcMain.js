@@ -1,3 +1,5 @@
+'use strict'
+
 import { ipcMain as bus } from 'electron'
 import fs from 'fs'
 
