@@ -102,75 +102,81 @@ body,
   overflow: hidden;
   color: #fff;
   background: rgba(0, 0, 0, 0.05);
+  #config_container {
+    height: 100%;
+    width: 100%;
+    padding: 5px;
+    #switch_container {
+      & > .switch {
+        background-color: rgb(40, 40, 40);
+        padding: 5px;
+        margin: 2px;
+        cursor: pointer;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        &.active {
+          background-color: rgb(83, 2, 2);
+          &:hover {
+            background-color: rgb(131, 4, 4);
+          }
+        }
+        &:hover {
+          background-color: rgb(50, 50, 50);
+        }
+      }
+    }
+    #entries_container {
+      & > .ips {
+        background-color: rgb(40, 40, 40);
+        padding: 5px;
+        margin: 2px;
+        cursor: pointer;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        &.active {
+          background-color: rgb(83, 2, 2);
+          &:hover {
+            background-color: rgb(131, 4, 4);
+          }
+        }
+        &:hover {
+          background-color: rgb(50, 50, 50);
+        }
+      }
+    }
+    #domains_container {
+      & > .domains {
+        background-color: rgb(40, 40, 40);
+        padding: 5px;
+        margin: 2px;
+        cursor: pointer;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        &.active {
+          background-color: rgb(83, 2, 2);
+          &:hover {
+            background-color: rgb(131, 4, 4);
+          }
+        }
+        &:hover {
+          background-color: rgb(50, 50, 50);
+        }
+      }
+    }
+    & > div {
+      width: calc(100% / 3);
+      float: left;
+      height: 100vh;
+      & > div {
+        height: 32px;
+        line-height: 26px;
+      }
+    }
+  }
 }
 html {
   &:hover {
     background: rgba(0, 0, 0, 0.5);
-  }
-}
-#config_container {
-  height: 100%;
-  width: 100%;
-  padding: 5px;
-  #switch_container {
-    & > .switch {
-      background-color: rgb(40, 40, 40);
-      padding: 5px;
-      margin: 2px;
-      cursor: pointer;
-      &.active {
-        background-color: rgb(83, 2, 2);
-        &:hover {
-          background-color: rgb(131, 4, 4);
-        }
-      }
-      &:hover {
-        background-color: rgb(50, 50, 50);
-      }
-    }
-  }
-  #entries_container {
-    & > .ips {
-      background-color: rgb(40, 40, 40);
-      padding: 5px;
-      margin: 2px;
-      cursor: pointer;
-      &.active {
-        background-color: rgb(83, 2, 2);
-        &:hover {
-          background-color: rgb(131, 4, 4);
-        }
-      }
-      &:hover {
-        background-color: rgb(50, 50, 50);
-      }
-    }
-  }
-  #domains_container {
-    & > .domains {
-      background-color: rgb(40, 40, 40);
-      padding: 5px;
-      margin: 2px;
-      cursor: pointer;
-      &.active {
-        background-color: rgb(83, 2, 2);
-        &:hover {
-          background-color: rgb(131, 4, 4);
-        }
-      }
-      &:hover {
-        background-color: rgb(50, 50, 50);
-      }
-    }
-  }
-  & > div {
-    width: calc(100% / 3);
-    float: left;
-    height: 100vh;
-    & > div {
-      height: 32px;
-      line-height: 26px;
-    }
   }
 }
 </style>
