@@ -51,20 +51,20 @@ export default {
     toggleBody() {
       let self = this;
       if (this.collapsed) {
-        console.log("size: ", self.size);
         win.setSize(self.size[0], self.size[1]);
         win.setPosition(self.position[0], self.position[1]);
-
         this.collapsed = false;
       } else {
         self.size = win.getSize();
         self.position = win.getPosition();
         win.setSize(self.size[0], 32);
         win.setPosition(0, 0);
-
         this.collapsed = true;
       }
     },
+    seFormState(newState){
+      this.formState = newState;
+    }
   },
   components: {
     titleBar,

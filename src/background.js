@@ -1,14 +1,14 @@
 'use strict'
 
 import { app, protocol, BrowserWindow, ipcMain as bus, screen } from 'electron'
-
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib'
 import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer'
+import './ipcMain'
+
 const isDevelopment = process.env.NODE_ENV !== 'production'
 
 
 // Event listeners
-import './ipcMain'
 let win;
 
 // Scheme must be registered before the app is ready
