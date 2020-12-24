@@ -3,6 +3,7 @@
 import { ipcMain as bus } from 'electron'
 import fs from 'fs'
 
+
 let fileDir = 'C:\\Windows\\System32\\drivers\\etc\\';
 // let fileDir = __dirname + '\\..\\tmp\\';
 let fileName = 'hosts';
@@ -31,7 +32,7 @@ bus.on('update-fs', (e, msg) => {
   for (var key in msg.switch) {
     if (msg.switch[key].enabled == true) {
       hostData = hostData + '\n#' + key + '\n';
-      if(msg.switch[key].entries.length >= 0){
+      if (msg.switch[key].entries.length >= 0) {
         msg.switch[key].entries.forEach(entry => {
           let domains = entry.domains.join(' ')
           hostData = hostData + entry.ip + ' ' + domains + '\n';
@@ -39,6 +40,6 @@ bus.on('update-fs', (e, msg) => {
       }
     }
   }
-  fs.writeFileSync(config, JSON.stringify(msg));
+  fs.writeFileSync(config, JSON.stringify(msg, null, "\t"));
   fs.writeFileSync(hostFile, hostData);
 });

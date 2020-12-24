@@ -12,6 +12,7 @@
   },
   "main": "background.js",
   "dependencies": {
+    "appdirectory": "^0.1.0",
     "browser-window": "^0.4.0",
     "core-js": "^3.6.5",
     "lodash": "^4.17.20",
