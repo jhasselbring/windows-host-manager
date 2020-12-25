@@ -3,6 +3,7 @@
 import { app, protocol, BrowserWindow, ipcMain as bus, screen } from 'electron'
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib'
 import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer'
+import path from 'path'
 import appData from './appData.js';
 import './ipcMain'
 
@@ -27,6 +28,7 @@ async function createWindow() {
     transparent:true,
     alwaysOnTop: true,
     vibrancy: 'ultra-dark',
+    icon: path.join(__static, 'icon.png'),
     webPreferences: {
       // Use pluginOptions.nodeIntegration, leave this alone
       // See nklayman.github.io/vue-cli-plugin-electron-builder/guide/security.html#node-integration for more info
