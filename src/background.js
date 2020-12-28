@@ -1,14 +1,19 @@
 'use strict'
 
-import { app, protocol, BrowserWindow, ipcMain as bus, screen } from 'electron'
+import { app, protocol, BrowserWindow } from 'electron'
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib'
 import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer'
 import path from 'path'
-import appData from './appData.js';
+import fs from 'fs'
 import './ipcMain'
-
-console.log('AppData', appData.userCache());
-
+const appDir = app.getPath('userData');
+console.log(appDir + '/config.json');
+// Check if config file exist
+if (!fs.existsSync(appDir + '/config.json')) {
+  const appDir = app.getPath('userData');
+  fs.writeFileSync(appDir + '/config.json', JSON.stringify({ switch: { default: { enabled: true, entries: [] } } }))
+}
+console.log(process.env.LOCALAPPDATA);
 const isDevelopment = process.env.NODE_ENV !== 'production'
 
 
@@ -25,7 +30,7 @@ async function createWindow() {
   win = new BrowserWindow({
     frame: false,
     frame: false,
-    transparent:true,
+    transparent: true,
     alwaysOnTop: true,
     vibrancy: 'ultra-dark',
     icon: path.join(__static, 'icon.png'),
@@ -62,13 +67,10 @@ app.on('activate', () => {
   // dock icon is clicked and there are no other windows open.
   if (BrowserWindow.getAllWindows().length === 0) createWindow()
 })
-app.on('trigger', () => {
-  console.log('triggered');
-})
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-async function  onAppReady(){
+async function onAppReady() {
   if (isDevelopment && !process.env.IS_TEST) {
     // Install Vue Devtools
     try {
@@ -96,8 +98,3 @@ if (isDevelopment) {
     })
   }
 }
-
-bus.on('getScreenSize', (e, msg) => {
-  const { width, height } = screen.getPrimaryDisplay().workAreaSize;
-  e.returnValue  = {width, height};
-})

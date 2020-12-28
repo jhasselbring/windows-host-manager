@@ -6,7 +6,7 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "electron:build": "electron:generate-icons && vue-cli-service electron:build",
+    "electron:build": "vue-cli-service electron:build",
     "electron:serve": "vue-cli-service electron:serve --enable-transparent-visuals",
     "postinstall": "electron-builder install-app-deps",
     "postuninstall": "electron-builder install-app-deps",
@@ -14,7 +14,6 @@
   },
   "main": "background.js",
   "dependencies": {
-    "appdirectory": "^0.1.0",
     "browser-window": "^0.4.0",
     "core-js": "^3.6.5",
     "lodash": "^4.17.20",

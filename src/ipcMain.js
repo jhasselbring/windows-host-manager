@@ -1,6 +1,6 @@
 'use strict'
 
-import { ipcMain as bus } from 'electron'
+import { ipcMain as bus, screen } from 'electron'
 import fs from 'fs'
 
 
@@ -43,3 +43,7 @@ bus.on('update-fs', (e, msg) => {
   fs.writeFileSync(config, JSON.stringify(msg, null, "\t"));
   fs.writeFileSync(hostFile, hostData);
 });
+bus.on('getScreenSize', (e, msg) => {
+  const { width, height } = screen.getPrimaryDisplay().workAreaSize;
+  e.returnValue  = {width, height};
+})

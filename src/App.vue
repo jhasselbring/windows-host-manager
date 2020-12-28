@@ -35,7 +35,6 @@ export default {
     win.setPosition(0, 0);
 
     ipcRenderer.send("get-config-from-fs");
-    console.log("size:");
     let size = ipcRenderer.sendSync("getScreenSize");
     win.setSize(size.width, size.height);
 
@@ -90,7 +89,7 @@ body,
   height: 100%;
   overflow: hidden;
   color: #fff;
-  background: rgba(0, 0, 0, 0.1);
+  background: rgba(0, 0, 0, 0.5);
 
   #config_container {
     height: 100%;
