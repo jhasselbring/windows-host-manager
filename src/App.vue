@@ -1,9 +1,17 @@
 <template>
   <titleBar :config="config" />
-  <div id="config_container" @click="toggleBody">
-    <switchContainer :config="config" :active="active" :formState="formState" />
-    <entrieshContainer :config="config" :active="active" :formState="formState" />
-    <domainsContainer :config="config" :active="active" :formState="formState" />
+  <div id="config_container" @click.stop="setFormState('body')">
+    <switchContainer :config="config" :active="active" :setFormState="setFormState" :formState="formState"/>
+    <entrieshContainer
+      :config="config"
+      :active="active"
+      :formState="formState"
+    />
+    <domainsContainer
+      :config="config"
+      :active="active"
+      :formState="formState"
+    />
   </div>
 </template>
 
@@ -56,14 +64,14 @@ export default {
       } else {
         self.size = win.getSize();
         self.position = win.getPosition();
-        win.setSize(self.size[0], 32);
+        win.setSize(self.size[0], 34);
         win.setPosition(0, 0);
         this.collapsed = true;
       }
     },
-    seFormState(newState){
+    setFormState(newState) {
       this.formState = newState;
-    }
+    },
   },
   components: {
     titleBar,
@@ -75,6 +83,9 @@ export default {
 </script>
 
 <style lang="scss">
+.invisible{
+  display: none;
+}
 * {
   box-sizing: border-box;
   padding: 0;
@@ -89,7 +100,7 @@ body,
   height: 100%;
   overflow: hidden;
   color: #fff;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.1);
 
   #config_container {
     height: 100%;
@@ -99,9 +110,23 @@ body,
       width: calc(100% / 3);
       float: left;
       height: 100vh;
-      & > div {
+      & > .switch,
+      .ips,
+      .domains {
         height: 32px;
         line-height: 26px;
+      }
+      & > .container-header {
+        margin: 2px;
+        padding: 5px;
+        height: auto;
+        background-color: rgba(40, 40, 40, 1);
+        h1 {
+          color: #fff;
+          text-shadow: 0 0 15px #000;
+          text-align: center;
+          margin: 5px;
+        }
       }
     }
   }

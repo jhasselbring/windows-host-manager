@@ -10,10 +10,26 @@ const appDir = app.getPath('userData');
 console.log(appDir + '/config.json');
 // Check if config file exist
 if (!fs.existsSync(appDir + '/config.json')) {
+  const defaultConfig = {
+    switch: {
+      default: {
+        enabled: true,
+        entries: [
+          { ip: "127.0.0.1", domains: ["localhost"] }
+        ]
+      }
+    },
+    settings:{
+      transparency: 0.1
+    }
+  }
+
   const appDir = app.getPath('userData');
-  fs.writeFileSync(appDir + '/config.json', JSON.stringify({ switch: { default: { enabled: true, entries: [] } } }))
+  fs.writeFileSync(appDir + '/config.json', JSON.stringify(defaultConfig, null, "\t"))
 }
-console.log(process.env.LOCALAPPDATA);
+
+// ########## END TESTS ############
+
 const isDevelopment = process.env.NODE_ENV !== 'production'
 
 

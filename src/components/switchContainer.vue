@@ -1,5 +1,6 @@
 <template>
   <div id="switch_container">
+    <div class="container-header"><h1>Groups</h1></div>
     <div
       v-for="(item, index) in config.switch"
       :key="index"
@@ -8,8 +9,15 @@
       @click.stop=""
     >
       <div>
-        <span v-if="item.enabled" @click="toggleActive(index)" class="clickable">✅</span>
-        <span v-if="!item.enabled" @click="toggleActive(index)" class="clickable">❌</span>
+        <span v-if="item.enabled" @click="toggleActive(index)" class="clickable"
+          >✅</span
+        >
+        <span
+          v-if="!item.enabled"
+          @click="toggleActive(index)"
+          class="clickable"
+          >❌</span
+        >
         {{ index }}
         <span class="tool-box">
           <span class="tool edit">🖊</span>
@@ -17,14 +25,25 @@
         </span>
       </div>
     </div>
-    <div class="switch add" @click.stop="">➕</div>
+    <div
+      v-if="formState != 'new_switch'"
+      class="switch add"
+      @click.stop="setFormState('new_switch')"
+    >
+      ➕
+    </div>
+    <div v-if="formState == 'new_switch'" class="switch" style="padding:0" @click.stop="">
+      <input @change="newUpdateSwitch" type="text" :model="newSwitch" class="switch" style="width: 100%; height:100%" placeholder="Provide a new group name here"/>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
   data() {
-    return {};
+    return {
+      newSwitch: null
+    };
   },
   methods: {
     toggleActive(index) {
@@ -35,12 +54,20 @@ export default {
       this.active.ip = 0;
       this.active.switch = index;
     },
+    newUpdateSwitch(){
+      console.log(this.newSwitch)
+    }
   },
-  props: ["config", "active"],
+  props: {
+    setFormState: Function,
+    config: Object,
+    active: Object,
+    formState: String,
+  },
 };
 </script>
-<style lang="scss">
-.clickable{
+<style lang="scss" scoped>
+.clickable {
   cursor: pointer;
 }
 #switch_container {
@@ -53,11 +80,11 @@ export default {
     border: 1px transparent solid;
     position: relative;
     visibility: visible;
-    &.add{
+    &.add {
       background-color: lightgreen;
       text-align: center;
       cursor: pointer;
-      &:hover{
+      &:hover {
         background-color: green;
         border: 1px solid lightgreen;
       }
@@ -77,7 +104,7 @@ export default {
         visibility: hidden;
         top: 2px;
         cursor: pointer;
-        &:hover{
+        &:hover {
           border: 1px solid red;
           color: red;
         }

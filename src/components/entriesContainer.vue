@@ -1,5 +1,6 @@
 <template>
   <div id="entries_container" v-if="config.switch && config.switch.default">
+    <div class="container-header"><h1>IPs</h1></div>
     <div
       v-for="(item, index) in config.switch[active.switch].entries"
       class="ips"

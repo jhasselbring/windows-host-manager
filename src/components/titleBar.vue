@@ -46,7 +46,7 @@ export default {
 <style lang="scss">
 #title-bar {
   // -webkit-app-region: drag;
-  height: 32px;
+  height: 34px;
   line-height: 32px;
   background-color: darkviolet;
   padding: none;

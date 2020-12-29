@@ -1,5 +1,6 @@
 <template>
   <div id="domains_container" v-if="config.switch">
+        <div class="container-header"><h1>Domains</h1></div>
     <div
       class="domains"
       v-for="(item, index) in config.switch[active.switch].entries[active.ip]
@@ -23,6 +24,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 #domains_container {
+
   & > .domains {
     background-color: rgb(40, 40, 40);
     padding: 2px;
