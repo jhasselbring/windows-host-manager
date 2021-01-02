@@ -1,7 +1,12 @@
 <template>
   <titleBar :config="config" />
   <div id="config_container" @click.stop="setFormState('body')">
-    <switchContainer :config="config" :active="active" :setFormState="setFormState" :formState="formState"/>
+    <switchContainer
+      :config="config"
+      :active="active"
+      :setFormState="setFormState"
+      :formState="formState"
+    />
     <entrieshContainer
       :config="config"
       :active="active"
@@ -83,7 +88,7 @@ export default {
 </script>
 
 <style lang="scss">
-.invisible{
+.invisible {
   display: none;
 }
 * {

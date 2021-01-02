@@ -32,8 +32,20 @@
     >
       ➕
     </div>
-    <div v-if="formState == 'new_switch'" class="switch" style="padding:0" @click.stop="">
-      <input @change="newUpdateSwitch" type="text" :model="newSwitch" class="switch" style="width: 100%; height:100%" placeholder="Provide a new group name here"/>
+    <div
+      v-if="formState == 'new_switch'"
+      class="switch"
+      style="padding:0"
+      @click.stop=""
+    >
+      <input
+        @change="newUpdateSwitch"
+        type="text"
+        :model="newSwitch"
+        class="switch"
+        style="width: 100%; height:100%"
+        placeholder="Provide a new group name here"
+      />
     </div>
   </div>
 </template>
@@ -42,7 +54,7 @@
 export default {
   data() {
     return {
-      newSwitch: null
+      newSwitch: null,
     };
   },
   methods: {
@@ -54,9 +66,9 @@ export default {
       this.active.ip = 0;
       this.active.switch = index;
     },
-    newUpdateSwitch(){
-      console.log(this.newSwitch)
-    }
+    newUpdateSwitch() {
+      console.log(this.newSwitch);
+    },
   },
   props: {
     setFormState: Function,
