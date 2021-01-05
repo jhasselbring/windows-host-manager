@@ -6,29 +6,6 @@ import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer'
 import path from 'path'
 import fs from 'fs'
 import './ipcMain'
-const appDir = app.getPath('userData');
-console.log(appDir + '/config.json');
-// Check if config file exist
-if (!fs.existsSync(appDir + '/config.json')) {
-  const defaultConfig = {
-    switch: {
-      default: {
-        enabled: true,
-        entries: [
-          { ip: "127.0.0.1", domains: ["localhost"] }
-        ]
-      }
-    },
-    settings:{
-      transparency: 0.1
-    }
-  }
-
-  const appDir = app.getPath('userData');
-  fs.writeFileSync(appDir + '/config.json', JSON.stringify(defaultConfig, null, "\t"))
-}
-
-// ########## END TESTS ############
 
 const isDevelopment = process.env.NODE_ENV !== 'production'
 
@@ -47,7 +24,7 @@ async function createWindow() {
     frame: false,
     frame: false,
     transparent: true,
-    alwaysOnTop: true,
+    // alwaysOnTop: true,
     vibrancy: 'ultra-dark',
     icon: path.join(__static, 'icon.png'),
     webPreferences: {

@@ -9,13 +9,8 @@
       @click.stop=""
     >
       <div>
-        <span v-if="item.enabled" @click="toggleActive(index)" class="clickable"
-          >✅</span
-        >
-        <span
-          v-if="!item.enabled"
-          @click="toggleActive(index)"
-          class="clickable"
+        <span v-if="item.enabled" @click="toggleActive(index)" class="clickable">✅</span>
+        <span v-if="!item.enabled" @click="toggleActive(index)" class="clickable"
           >❌</span
         >
         {{ index }}
@@ -32,8 +27,21 @@
     >
       ➕
     </div>
-    <div v-if="formState == 'new_switch'" class="switch" style="padding:0" @click.stop="">
-      <input @change="newUpdateSwitch" type="text" :model="newSwitch" class="switch" style="width: 100%; height:100%" placeholder="Provide a new group name here"/>
+    <div
+      v-if="formState == 'new_switch'"
+      class="switch"
+      style="padding: 0"
+      @click.stop=""
+    >
+      <input
+        @change="newSwitchHandler"
+        ref="newSwitchField"
+        type="text"
+        v-model="newSwitchValue"
+        class="switch"
+        style="width: 100%; height: 100%"
+        placeholder="Provide a new group name here"
+      />
     </div>
   </div>
 </template>
@@ -42,7 +50,7 @@
 export default {
   data() {
     return {
-      newSwitch: null
+      newSwitchValue: null,
     };
   },
   methods: {
@@ -54,9 +62,9 @@ export default {
       this.active.ip = 0;
       this.active.switch = index;
     },
-    newUpdateSwitch(){
-      console.log(this.newSwitch)
-    }
+    newSwitchHandler() {
+      this.$parent.createNewGroup(this.newSwitchValue);
+    },
   },
   props: {
     setFormState: Function,
@@ -67,9 +75,6 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.clickable {
-  cursor: pointer;
-}
 #switch_container {
   & > .switch {
     background-color: rgb(40, 40, 40);

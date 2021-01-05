@@ -1,15 +1,22 @@
 <template>
   <titleBar :config="config" />
   <div id="config_container" @click.stop="setFormState('body')">
-    <switchContainer :config="config" :active="active" :setFormState="setFormState" :formState="formState"/>
+    <switchContainer
+      :config="config"
+      :active="active"
+      :setFormState="setFormState"
+      :formState="formState"
+    />
     <entrieshContainer
       :config="config"
       :active="active"
+      :setFormState="setFormState"
       :formState="formState"
     />
     <domainsContainer
       :config="config"
       :active="active"
+      :setFormState="setFormState"
       :formState="formState"
     />
   </div>
@@ -72,6 +79,26 @@ export default {
     setFormState(newState) {
       this.formState = newState;
     },
+    createNewGroup(name) {
+      const sample = {
+        enabled: true,
+        entries: [],
+      };
+
+      // Check if group already exist
+      if (this.config.switch[name]) {
+        alert(`You already have a group called ${name}`);
+      } else {
+        this.config.switch[name] = sample;
+        this.updateFS();
+      }
+    },
+    addIPToGroup(ip) {
+      console.log(ip);
+    },
+    addDomainToIP(domain) {
+      console.log(domain);
+    },
   },
   components: {
     titleBar,
@@ -83,7 +110,10 @@ export default {
 </script>
 
 <style lang="scss">
-.invisible{
+.clickable {
+  cursor: pointer;
+}
+.invisible {
   display: none;
 }
 * {

@@ -1,14 +1,30 @@
 'use strict'
 
-import { ipcMain as bus, screen } from 'electron'
+import { app, ipcMain as bus, screen } from 'electron'
 import fs from 'fs'
 
+const appDir = app.getPath('userData');
+const configFile = appDir + '\config.json';
+const hostFile = 'C:\\Windows\\System32\\drivers\\etc\\hosts'
 
-let fileDir = 'C:\\Windows\\System32\\drivers\\etc\\';
-// let fileDir = __dirname + '\\..\\tmp\\';
-let fileName = 'hosts';
-let hostFile = fileDir + fileName;
-let config = fileDir + fileName + '.json';
+// Check if config file exist
+if (!fs.existsSync(configFile)) {
+  const defaultConfig = {
+    switch: {
+      default: {
+        enabled: true,
+        entries: [
+          { ip: "127.0.0.1", domains: ["localhost"] }
+        ]
+      }
+    },
+    settings:{
+      transparency: 0.1
+    }
+  }
+
+  fs.writeFileSync(configFile, JSON.stringify(defaultConfig, null, "\t"))
+}
 
 // Waits for get config request from Renderer
 bus.on('get-config-from-fs', (e, msg) => {
@@ -16,7 +32,7 @@ bus.on('get-config-from-fs', (e, msg) => {
   // Read config from FS
   try {
     // Read file
-    const data = fs.readFileSync(config, 'utf8')
+    const data = fs.readFileSync(configFile, 'utf8')
 
     // Respond
     e.reply('send-config-from-fs', JSON.parse(data));
@@ -26,6 +42,7 @@ bus.on('get-config-from-fs', (e, msg) => {
 
 });
 
+// This is what updates both the host file and config file
 bus.on('update-fs', (e, msg) => {
   msg = JSON.parse(msg);
   let hostData = '';
@@ -40,9 +57,11 @@ bus.on('update-fs', (e, msg) => {
       }
     }
   }
-  fs.writeFileSync(config, JSON.stringify(msg, null, "\t"));
+  fs.writeFileSync(configFile, JSON.stringify(msg, null, "\t"));
   fs.writeFileSync(hostFile, hostData);
 });
+
+// Provides the screensize to the renderer
 bus.on('getScreenSize', (e, msg) => {
   const { width, height } = screen.getPrimaryDisplay().workAreaSize;
   e.returnValue  = {width, height};

@@ -10,20 +10,48 @@
     >
       {{ item.ip }}
     </div>
+    <div
+      v-if="formState != 'new_entry'"
+      class="ips add"
+      @click.stop="setFormState('new_entry')"
+    >
+      ➕
+    </div>
+    <div v-if="formState == 'new_entry'" class="ips" style="padding: 0" @click.stop="">
+      <input
+        @change="newIPHandler"
+        ref="newSwitchField"
+        type="text"
+        v-model="newIPValue"
+        class="switch"
+        style="width: 100%; height: 100%"
+        placeholder="Provide a new IP here"
+      />
+    </div>
   </div>
 </template>
 
 <script>
 export default {
   data() {
-    return {};
+    return {
+      newIPValue: null,
+    };
   },
   methods: {
     focusIP(index) {
       this.active.ip = index;
     },
+    newIPHandler() {
+      this.$parent.addIPToGroup(this.newIPValue);
+    },
   },
-  props: ["config", "active"],
+  props: {
+    setFormState: Function,
+    config: Object,
+    active: Object,
+    formState: String,
+  },
 };
 </script>
 <style lang="scss" scoped>
@@ -36,7 +64,15 @@ export default {
     overflow: hidden;
     text-overflow: ellipsis;
     border: 1px transparent solid;
-
+    &.add {
+      background-color: lightgreen;
+      text-align: center;
+      cursor: pointer;
+      &:hover {
+        background-color: green;
+        border: 1px solid lightgreen;
+      }
+    }
     &.active {
       background-color: rgb(83, 2, 2);
       &:hover {
