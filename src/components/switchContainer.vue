@@ -6,7 +6,7 @@
       :key="index"
       class="switch"
       :class="{ active: active.switch == index }"
-      @click.stop=""
+      @click.stop="focusSwitch(index)"
     >
       <div>
         <span v-if="item.enabled" @click="toggleActive(index)" class="clickable">✅</span>
@@ -15,8 +15,7 @@
         >
         {{ index }}
         <span class="tool-box">
-          <span class="tool edit">🖊</span>
-          <span class="tool expand" @click="focusSwitch(index)">▶</span>
+          <span class="tool edit">⚙</span>
         </span>
       </div>
     </div>
@@ -114,7 +113,7 @@ export default {
           color: red;
         }
         &.edit {
-          right: 35px;
+          right: 2px;
         }
         &.expand {
           right: 2px;

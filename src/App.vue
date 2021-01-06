@@ -102,12 +102,9 @@ export default {
         domains: [],
       };
 
-      let existing = _.filter(
-        this.config.switch[this.active.switch].entries,
-        (o) => {
-          return o.ip == ip;
-        }
-      );
+      let existing = _.filter(this.config.switch[this.active.switch].entries, (o) => {
+        return o.ip == ip;
+      });
       if (existing.length > 0) {
         alert("This IP already exist.");
       } else {
@@ -116,7 +113,8 @@ export default {
       }
     },
     addDomainToIP(domain) {
-      console.log(domain);
+      this.config.switch[this.active.switch].entries[this.active.ip].domains.push(domain)
+      this.updateFS();
     },
   },
   components: {
