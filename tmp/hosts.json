@@ -1,17 +1,64 @@
 {
-    "switch": {
-        "default": {
-            "enabled": true,
-            "entries": [
-                { "ip": "127.0.0.1", "domains": ["localhost", "kubernetes.docker.internal"] },
-                { "ip": "192.168.0.3", "domains": ["host.docker.internal", "gateway.docker.internal"] },
-                { "ip": "192.168.0.13", "domains": ["db.9ws.us"] },
-                { "ip": "192.168.0.8", "domains": ["www.bovedainc.com.dev", "bovedainc.com.dev", "db.bovedainc.com"] }
-            ]
+  "switch": {
+    "default": {
+      "enabled": true,
+      "entries": [
+        {
+          "ip": "127.0.0.1",
+          "domains": ["localhost", "kubernetes.docker.internal"]
         },
-        "PVE": { "enabled": true, "entries": [{ "ip": "192.168.0.14", "domains": ["pve.9w.com"] }] },
-        "SonarQube": { "enabled": false, "entries": [{ "ip": "192.168.0.18", "domains": ["sonarqube.9ws.us"] }] },
-        "9WS": { "enabled": false, "entries": [{ "ip": "192.168.0.8", "domains": ["sonarqube.9ws.us", "bovedainc.com.dev", "dev.bovedainc.com", "bovedainc.com", "www.bovedainc.com", "amazon.bovedainc.com", "db.bovedainc.com"] }] },
-        "Local": { "enabled": false, "entries": [{ "ip": "127.0.0.1", "domains": ["dev.bovedainc.com", "amazon.bovedainc.com", "db.bovedainc.com"] }] }
+        {
+          "ip": "192.168.0.3",
+          "domains": ["host.docker.internal", "gateway.docker.internal"]
+        },
+        { "ip": "192.168.0.13", "domains": ["db.9ws.us"] },
+        {
+          "ip": "192.168.0.8",
+          "domains": [
+            "www.bovedainc.com.dev",
+            "bovedainc.com.dev",
+            "db.bovedainc.com"
+          ]
+        }
+      ]
+    },
+    "PVE": {
+      "enabled": true,
+      "entries": [{ "ip": "192.168.0.14", "domains": ["pve.9w.com"] }]
+    },
+    "SonarQube": {
+      "enabled": false,
+      "entries": [{ "ip": "192.168.0.18", "domains": ["sonarqube.9ws.us"] }]
+    },
+    "9WS": {
+      "enabled": false,
+      "entries": [
+        {
+          "ip": "192.168.0.8",
+          "domains": [
+            "sonarqube.9ws.us",
+            "bovedainc.com.dev",
+            "dev.bovedainc.com",
+            "bovedainc.com",
+            "www.bovedainc.com",
+            "amazon.bovedainc.com",
+            "db.bovedainc.com"
+          ]
+        }
+      ]
+    },
+    "Local": {
+      "enabled": false,
+      "entries": [
+        {
+          "ip": "127.0.0.1",
+          "domains": [
+            "dev.bovedainc.com",
+            "amazon.bovedainc.com",
+            "db.bovedainc.com"
+          ]
+        }
+      ]
     }
+  }
 }

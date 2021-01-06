@@ -1,5 +1,5 @@
 <template>
-  <div id="domains_container" v-if="config.switch">
+  <div id="domains_container" v-if="(config.switch && config.switch[active.switch] && config.switch[active.switch].entries[active.ip])">
     <div class="container-header"><h1>Domains</h1></div>
     <div
       class="domains"

@@ -28,6 +28,7 @@ import titleBar from "./components/titleBar";
 import switchContainer from "./components/switchContainer";
 import entrieshContainer from "./components/entriesContainer";
 import domainsContainer from "./components/domainsContainer";
+import _ from "lodash";
 let win = remote.getCurrentWindow();
 
 export default {
@@ -91,10 +92,28 @@ export default {
       } else {
         this.config.switch[name] = sample;
         this.updateFS();
+        this.active.switch = name;
       }
     },
     addIPToGroup(ip) {
-      console.log(ip);
+      console.log("Adding IP", ip);
+      const sample = {
+        ip: ip,
+        domains: [],
+      };
+
+      let existing = _.filter(
+        this.config.switch[this.active.switch].entries,
+        (o) => {
+          return o.ip == ip;
+        }
+      );
+      if (existing.length > 0) {
+        alert("This IP already exist.");
+      } else {
+        this.config.switch[this.active.switch].entries.push(sample);
+        this.updateFS();
+      }
     },
     addDomainToIP(domain) {
       console.log(domain);

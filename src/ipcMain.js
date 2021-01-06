@@ -4,9 +4,10 @@ import { app, ipcMain as bus, screen } from 'electron'
 import fs from 'fs'
 
 const appDir = app.getPath('userData');
-const configFile = appDir + '\config.json';
+const configFile = appDir + '\\config.json';
 const hostFile = 'C:\\Windows\\System32\\drivers\\etc\\hosts'
-
+console.log(configFile);
+console.log(hostFile);
 // Check if config file exist
 if (!fs.existsSync(configFile)) {
   const defaultConfig = {
