@@ -1,4 +1,4 @@
-# host-manager
+# w-host-manager
 
 ## Project setup
 ```
