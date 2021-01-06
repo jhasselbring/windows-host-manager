@@ -1,4 +1,4 @@
-# host-manager
+# windows-host-manager
 
 ## Project setup
 ```
