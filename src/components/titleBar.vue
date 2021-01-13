@@ -11,7 +11,7 @@
   </div>
 </template>
 <script>
-import { electron, remote } from "electron";
+import { remote } from "electron";
 import _ from "lodash";
 export default {
   data() {

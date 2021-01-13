@@ -4,7 +4,6 @@ import { app, protocol, BrowserWindow } from 'electron'
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib'
 import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer'
 import path from 'path'
-import fs from 'fs'
 import './ipcMain'
 
 const isDevelopment = process.env.NODE_ENV !== 'production'
@@ -21,7 +20,6 @@ protocol.registerSchemesAsPrivileged([
 async function createWindow() {
   // Create the browser window.
   win = new BrowserWindow({
-    frame: false,
     frame: false,
     transparent: true,
     // alwaysOnTop: true,

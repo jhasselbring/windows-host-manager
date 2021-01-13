@@ -50,7 +50,7 @@ bus.on('update-fs', (e, msg) => {
   for (var key in msg.switch) {
     if (msg.switch[key].enabled == true) {
       hostData = hostData + '\n#' + key + '\n';
-      if (msg.switch[key].entries.length >= 0) {
+      if (msg.switch[key].entries.length > 0) {
         msg.switch[key].entries.forEach(entry => {
           let domains = entry.domains.join(' ')
           hostData = hostData + entry.ip + ' ' + domains + '\n';

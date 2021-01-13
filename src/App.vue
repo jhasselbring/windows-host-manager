@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import { electron, remote, ipcRenderer } from "electron";
+import { remote, ipcRenderer } from "electron";
 import titleBar from "./components/titleBar";
 import switchContainer from "./components/switchContainer";
 import entrieshContainer from "./components/entriesContainer";
