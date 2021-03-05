@@ -13,13 +13,7 @@ jobs:
 
     - uses: actions/setup-node@master
       with:
-        node-version: 10.16
-
-    - name: install node tools
-      run: npm install --global --production windows-build-tools@4.0.0
-
-    - name: install node-gyp
-      run: npm install --global node-gyp@latest
+        node-version: 14.15.3
 
     - name: Install dependencies
       run: npm install
