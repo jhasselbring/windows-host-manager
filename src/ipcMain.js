@@ -19,7 +19,7 @@ if (!fs.existsSync(configFile)) {
         ]
       }
     },
-    settings:{
+    settings: {
       transparency: 0.1
     }
   }
@@ -65,5 +65,5 @@ bus.on('update-fs', (e, msg) => {
 // Provides the screensize to the renderer
 bus.on('getScreenSize', (e, msg) => {
   const { width, height } = screen.getPrimaryDisplay().workAreaSize;
-  e.returnValue  = {width, height};
+  e.returnValue = { width, height };
 })
