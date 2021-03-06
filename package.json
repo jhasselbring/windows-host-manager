@@ -1,5 +1,6 @@
 {
   "name": "host-manager",
+  "description": "Desktop app that allows you to easily manage hosts.",
   "version": "0.1.6",
   "private": true,
   "author": "ToolBox Plus",
