@@ -1,7 +1,7 @@
 <template>
   <div id="title-bar">
     <div id="title">
-      &nbsp;🔥 Host Manager - v1.0.0 <span id="active" v-html="active"></span>
+      &nbsp;🔥 Host Manager - v1.0.6 <span id="active" v-html="active"></span>
     </div>
 
     <div id="title-bar-btns">
@@ -17,7 +17,6 @@ export default {
   data() {
     return {};
   },
-  mounted() {},
   methods: {
     close() {
       var win = remote.getCurrentWindow();
