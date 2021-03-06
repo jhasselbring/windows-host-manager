@@ -3,6 +3,7 @@ node_modules
 /dist
 .scannerwork
 scan.cmd
+/tmp
 
 # local env files
 .env.local
