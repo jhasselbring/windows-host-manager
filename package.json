@@ -1,7 +1,7 @@
 {
   "name": "host-manager",
   "description": "Desktop app that allows you to easily manage hosts.",
-  "version": "0.1.7",
+  "version": "0.1.9",
   "private": true,
   "author": "ToolBox Plus",
   "scripts": {
@@ -9,7 +9,7 @@
     "build": "vue-cli-service build",
     "e:build": "vue-cli-service electron:build",
     "e:publish": "vue-cli-service electron:build -p always",
-    "electron:serve": "vue-cli-service electron:serve --enable-transparent-visuals",
+    "e:serve": "vue-cli-service electron:serve --enable-transparent-visuals",
     "postinstall": "electron-builder install-app-deps",
     "postuninstall": "electron-builder install-app-deps",
     "e:generate-icons": "electron-icon-builder --input=./public/icon.png --output=build --flatten"
